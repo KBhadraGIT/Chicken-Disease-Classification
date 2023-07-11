@@ -3,7 +3,7 @@ from pathlib import Path
 from box import ConfigBox
 import os, sys
 from box.exceptions import BoxValueError
-from chicken_disease import logger, CDCException
+from chicken_disease import *
 import yaml
 
 
@@ -42,12 +42,14 @@ def create_directories(path_to_directories: list, verbose=True):
         path_to_directories (list): list of path of directories
         ignore_log (bool, optional): ignore if multiple dirs is to be created. Defaults to False.
     """
-    
-    for path in path_to_directories:
-        os.makedirs(path, exist_ok=True)
-        if verbose:
-            logger.info(f"created directory at: {path}")
-
+    try:
+        for path in path_to_directories:
+            os.makedirs(path, exist_ok=True)
+            if verbose:
+                logger.info(f"created directory at: {path}")
+    except Exception as e:
+        logger.exception(CDCException(error_message=e, error_detail=sys))
+        CDCException(error_message=e, error_detail=sys)
 
 @ensure_annotations
 def get_size(path: Path) -> str:
@@ -59,5 +61,9 @@ def get_size(path: Path) -> str:
     Returns:
         str: size in KB
     """
-    size_in_kb = round(os.path.getsize(path)/1024)
-    return f"~ {size_in_kb} KB"
+    try:
+        size_in_kb = round(os.path.getsize(path)/1024)
+        return f"~ {size_in_kb} KB"
+    except Exception as e:
+        logger.exception(CDCException(error_message=e, error_detail=sys))
+        CDCException(error_message=e, error_detail=sys)

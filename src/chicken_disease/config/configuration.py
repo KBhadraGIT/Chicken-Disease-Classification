@@ -1,7 +1,8 @@
 #Import required dependencies
 from chicken_disease.constants import *
 from chicken_disease.utils import read_yaml, create_directories
-from chicken_disease.entity.config_entity import DataIngestionConfig
+from chicken_disease.entity.config_entity import (DataIngestionConfig,
+                                                  ModelTrainerConfig)
 
 
 #Data Ingestion
@@ -39,6 +40,7 @@ class ConfigurationManager:
 
         create_directories([self.config.artifacts_root])
     
+
     def get_data_ingestion_config(self) -> DataIngestionConfig:
         """
         Retrieves the data ingestion configuration.
@@ -59,3 +61,27 @@ class ConfigurationManager:
         )
 
         return data_ingestion_config
+    
+
+    def get_model_trainer_config(self) -> ModelTrainerConfig:
+        """
+        Retrieves the model trainer configuration.
+
+        Returns:
+            ModelTrainerConfig: The configuration object for the model trainer.
+        """
+        
+        config = self.config.model_trainer
+        
+        create_directories([config.root_dir])
+
+        model_trainer_config = ModelTrainerConfig(root_dir=Path(config.root_dir),
+                                                  base_model_path=Path(config.base_model_path),
+                                                  trained_model_path=Path(config.trained_model_path),
+                                                  params_image_size=self.params.IMAGE_SIZE,
+                                                  params_learning_rate=self.params.LEARNING_RATE,
+                                                  params_include_top=self.params.INCLUDE_TOP,
+                                                  params_weights=self.params.WEIGHTS,
+                                                  params_classes=self.params.CLASSES)
+
+        return model_trainer_config

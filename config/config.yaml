@@ -5,3 +5,8 @@ data_ingestion:
   source_URL: https://github.com/KBhadraGIT/Data/raw/main/Chicken-fecal-images.zip
   local_data_file: artifacts/data_ingestion/data.zip
   unzip_dir: artifacts/data_ingestion
+
+model_trainer:
+  root_dir: artifacts/model_training
+  base_model_path: artifacts/model_training/base_model.h5
+  trained_model_path: artifacts/model_training/trained_model.h5

@@ -55,10 +55,10 @@ class DataIngestionTrainingPipeline:
 
 if __name__ == '__main__':
     try:
-        logger.info(f">>>>>> stage {STAGE_NAME} started <<<<<<")
+        logger.info(">>>>>>>>>>>>>>>>>>>>  INITIATING DATA INGESTION  <<<<<<<<<<<<<<<<<<<<")
         obj = DataIngestionTrainingPipeline()
         obj.main()
-        logger.info(f">>>>>> stage {STAGE_NAME} completed <<<<<<\n\nx==========x")
+        logger.info(">>>>>>>>>>>>>>>>>>>>  TERMINATING DATA INGESTION  <<<<<<<<<<<<<<<<<<<<")
     except Exception as e:
             logger.exception(CDCException(error_message=e, error_detail=sys))
             raise CDCException(error_message=e, error_detail=sys)
